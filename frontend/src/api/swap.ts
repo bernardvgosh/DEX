@@ -1,3 +1,5 @@
+import { getMockSwapQuote } from './mockData'
+
 export interface SwapQuote {
   from: string
   to: string
@@ -9,10 +11,11 @@ export interface SwapQuote {
   route: string
 }
 
+const API = import.meta.env.VITE_API_URL ?? ''
+
 export async function fetchSwapQuote(from: string, to: string, amount: number): Promise<SwapQuote> {
-  const res = await fetch(
-    `http://localhost:3001/api/swap/quote?from=${from}&to=${to}&amount=${amount}`
-  )
+  if (!API) return getMockSwapQuote(from, to, amount)
+  const res = await fetch(`${API}/api/swap/quote?from=${from}&to=${to}&amount=${amount}`)
   if (!res.ok) throw new Error(`Failed to fetch quote: ${res.status}`)
   return res.json()
 }

@@ -1,3 +1,5 @@
+import { MOCK_CHAINS } from './mockData'
+
 export interface Chain {
   id: string
   name: string
@@ -5,8 +7,11 @@ export interface Chain {
   color: string
 }
 
+const API = import.meta.env.VITE_API_URL ?? ''
+
 export async function fetchChains(): Promise<Chain[]> {
-  const res = await fetch('http://localhost:3001/api/chains')
+  if (!API) return MOCK_CHAINS
+  const res = await fetch(`${API}/api/chains`)
   if (!res.ok) throw new Error(`Failed to fetch chains: ${res.status}`)
   return res.json()
 }

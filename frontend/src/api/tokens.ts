@@ -1,3 +1,5 @@
+import { MOCK_TOKENS } from './mockData'
+
 export interface Token {
   symbol: string
   name: string
@@ -6,8 +8,11 @@ export interface Token {
   chain: string
 }
 
+const API = import.meta.env.VITE_API_URL ?? ''
+
 export async function fetchTokens(): Promise<Token[]> {
-  const res = await fetch('http://localhost:3001/api/tokens')
+  if (!API) return MOCK_TOKENS
+  const res = await fetch(`${API}/api/tokens`)
   if (!res.ok) throw new Error(`Failed to fetch tokens: ${res.status}`)
   return res.json()
 }

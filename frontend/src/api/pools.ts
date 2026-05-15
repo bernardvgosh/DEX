@@ -1,3 +1,5 @@
+import { MOCK_POOLS, getMockPoolDetail } from './mockData'
+
 export interface Pool {
   id: string
   chain: string
@@ -31,17 +33,29 @@ export interface PoolDetail {
   transactions: Transaction[]
 }
 
+const API = import.meta.env.VITE_API_URL ?? ''
+
 export async function fetchPools(chain?: string): Promise<Pool[]> {
+  if (!API) {
+    return chain && chain !== 'all'
+      ? MOCK_POOLS.filter((p) => p.chain === chain)
+      : MOCK_POOLS
+  }
   const url = chain && chain !== 'all'
-    ? `http://localhost:3001/api/pools?chain=${chain}`
-    : 'http://localhost:3001/api/pools'
+    ? `${API}/api/pools?chain=${chain}`
+    : `${API}/api/pools`
   const res = await fetch(url)
   if (!res.ok) throw new Error(`Failed to fetch pools: ${res.status}`)
   return res.json()
 }
 
 export async function fetchPoolDetail(id: string): Promise<PoolDetail> {
-  const res = await fetch(`http://localhost:3001/api/pools/${id}`)
+  if (!API) {
+    const detail = getMockPoolDetail(id)
+    if (!detail) throw new Error('Pool not found')
+    return detail
+  }
+  const res = await fetch(`${API}/api/pools/${id}`)
   if (!res.ok) throw new Error(`Failed to fetch pool: ${res.status}`)
   return res.json()
 }
