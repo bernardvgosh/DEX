@@ -4,12 +4,14 @@ import { ChainSelector } from '../components/ChainSelector'
 import './AppLayout.css'
 
 const NAV = [
+  { to: '/',          label: 'Home',      icon: '⌂', exact: true },
   { to: '/pools',     label: 'Pools',     icon: '◈' },
   { to: '/swap',      label: 'Swap',      icon: '⇄' },
   { to: '/liquidity', label: 'Liquidity', icon: '≋' },
 ]
 
 const PAGE_TITLES: Record<string, string> = {
+  '/':          'Home',
   '/pools':     'Liquidity Pools',
   '/swap':      'Swap',
   '/liquidity': 'Liquidity',
@@ -29,8 +31,9 @@ export function AppLayout() {
           <span>Multi-Chain DEX</span>
         </div>
         <nav className="sidebar-nav">
-          {NAV.map(({ to, label, icon }) => (
-            <NavLink key={to} to={to} className={({ isActive }) => isActive ? 'active' : ''}>
+          {NAV.map(({ to, label, icon, exact }) => (
+            <NavLink key={to} to={to} end={exact}
+              className={({ isActive }) => isActive ? 'active' : ''}>
               <span className="nav-icon">{icon}</span>
               {label}
             </NavLink>
