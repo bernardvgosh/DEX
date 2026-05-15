@@ -1,0 +1,50 @@
+.pool-list {
+  padding: 40px 32px;
+  text-align: left;
+
+  @media (max-width: 1024px) {
+    padding: 24px 20px;
+  }
+}
+
+.pool-status {
+  padding: 40px;
+  text-align: center;
+}
+
+.pool-error {
+  color: #ef4444;
+}
+
+.pool-list table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 24px;
+  font-size: 16px;
+}
+
+.pool-list th {
+  text-align: left;
+  padding: 10px 16px;
+  border-bottom: 2px solid var(--border);
+  color: var(--text);
+  font-weight: 500;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.pool-list td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-h);
+}
+
+.pool-list tbody tr:hover td {
+  background: var(--accent-bg);
+}
+
+.pool-pair {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
